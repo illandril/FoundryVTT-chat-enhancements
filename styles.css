@@ -1,0 +1,16 @@
+.illandril-chat-enhancements--currentSpeaker {
+  flex: 0;
+  padding: 3px 0.5em;
+}
+
+.illandril-chat-enhancements--playerName {
+  opacity: 0.5;
+}
+
+.illandril-chat-enhancements--playerName::before {
+  content: ' [';
+}
+
+.illandril-chat-enhancements--playerName::after {
+  content: ']';
+}
