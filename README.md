@@ -6,8 +6,7 @@ This is a module for Foundry Virtual Tabletop that adds a few enhancements to th
 It currently does the following:
 1. Shows the name of the player next to the name of the actor for any IC messages
 1. Shows the name of the actor you are currently controlling
-1. Replaces Actor names with Token names
-  * In the event the token associated with a chat message no longer exists, it will use the actor's prototype token's name. In the event the actor no longer exists, it will show "???" to all players, and the original chat message's alias (usually the actor's name) to the GM.
+1. Replaces Actor names with Token names. Note: In the event the token associated with a chat message no longer exists, it will use the actor's prototype token's name. In the event the actor no longer exists, it will show "???" to all players, and the original chat message's alias (usually the actor's name) to the GM.
 1. Hovering over a chat message act as if you hovered over the speaker's token 
 
 # Installation
