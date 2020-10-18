@@ -67,7 +67,7 @@ function getTokenName(speaker) {
     if (actor.data.token) {
       return actor.data.token.name;
     }
-    if (actor.isPC) {
+    if (actor.hasPlayerOwner) {
       return actor.name;
     }
   }
@@ -78,7 +78,19 @@ function getTokenName(speaker) {
 }
 
 function getToken(sceneID, tokenID) {
-  const scene = game.scenes.get(sceneID);
+  const specifiedScene = game.scenes.get(sceneID);
+  if (specifiedScene) {
+    return getTokenForScene(specifiedScene, tokenID);
+  }
+  let foundToken = null;
+  game.scenes.find((scene) => {
+    foundToken = getTokenForScene(scene, tokenID);
+    return !!foundToken;
+  });
+  return foundToken;
+}
+
+function getTokenForScene(scene, tokenID) {
   if (!scene) {
     return null;
   }
