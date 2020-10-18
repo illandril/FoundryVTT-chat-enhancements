@@ -5,6 +5,11 @@ const CSS_PLAYER_NAME = CSS_PREFIX + 'playerName';
 const currentSpeakerDisplay = document.createElement('div');
 currentSpeakerDisplay.classList.add(CSS_CURRENT_SPEAKER);
 
+// hasPlayerOwner: 0.7.4, isPC: 0.6.x
+const hasPlayerOwner = Entity.prototype.hasOwnProperty('hasPlayerOwner')
+  ? (actor) => actor.hasPlayerOwner
+  : (actor) => actor.isPC;
+
 function updateSpeaker() {
   currentSpeakerDisplay.innerText = game.i18n.format('illandril-chat-enhancements.currentSpeaker', {
     name: ChatMessage.getSpeaker().alias,
@@ -67,7 +72,7 @@ function getTokenName(speaker) {
     if (actor.data.token) {
       return actor.data.token.name;
     }
-    if (actor.hasPlayerOwner) {
+    if (hasPlayerOwner(actor)) {
       return actor.name;
     }
   }
