@@ -5,7 +5,7 @@ const CSS_PLAYER_NAME = CSS_PREFIX + 'playerName';
 const currentSpeakerDisplay = document.createElement('div');
 currentSpeakerDisplay.classList.add(CSS_CURRENT_SPEAKER);
 
-// hasPlayerOwner: 0.7.4, isPC: 0.6.x
+// hasPlayerOwner: 0.7.x, isPC: 0.6.x
 const hasPlayerOwner = Entity.prototype.hasOwnProperty('hasPlayerOwner')
   ? (actor) => actor.hasPlayerOwner
   : (actor) => actor.isPC;
@@ -20,6 +20,12 @@ Hooks.once('ready', () => {
   const chatControls = document.getElementById('chat-controls');
   chatControls.parentNode.insertBefore(currentSpeakerDisplay, chatControls);
   updateSpeaker();
+
+  const csd = $(currentSpeakerDisplay);
+  csd.hover((event) => {
+    hoverIn(event, ChatMessage.getSpeaker());
+  }, hoverOut);
+  csd.dblclick((event) => dblclick(event, ChatMessage.getSpeaker()));
 });
 
 Hooks.on('controlToken', updateSpeaker);
@@ -45,6 +51,7 @@ Hooks.on('renderChatMessage', (message, html, speakerInfo) => {
     messageSenderElem.hover((event) => {
       hoverIn(event, speaker);
     }, hoverOut);
+    messageSenderElem.dblclick((event) => dblclick(event, speaker));
   }
 });
 
@@ -110,12 +117,7 @@ function emptyNode(node) {
   }
 }
 
-function getTokenObj(id) {
-  return canvas.tokens.get(id);
-}
-
-let lastHoveredToken = null;
-function hoverIn(event, speaker) {
+function getThisSceneTokenObj(speaker) {
   let token = getTokenObj(speaker.token);
   if (!token) {
     const scene = game.scenes.get(game.user.viewedScene);
@@ -128,6 +130,16 @@ function hoverIn(event, speaker) {
       }
     }
   }
+  return token;
+}
+
+function getTokenObj(id) {
+  return canvas.tokens.get(id);
+}
+
+let lastHoveredToken = null;
+function hoverIn(event, speaker) {
+  let token = getThisSceneTokenObj(speaker);
   if (token && token.isVisible) {
     event.fromChat = true;
     token._onHoverIn(event);
@@ -140,5 +152,12 @@ function hoverOut(event) {
     event.fromChat = true;
     lastHoveredToken._onHoverOut(event);
     lastHoveredToken = null;
+  }
+}
+
+function dblclick(event, speaker) {
+  let token = getThisSceneTokenObj(speaker);
+  if (token && token.isVisible) {
+    canvas.animatePan({ ...token.center, duration: 250 });
   }
 }
