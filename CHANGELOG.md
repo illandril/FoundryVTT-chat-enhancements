@@ -1,3 +1,7 @@
+## [v1.0.4](https://github.com/illandril/FoundryVTT-chat-enhancements/releases/tag/v1.0.4) (2020-12-20)
+**Fixed Bugs:**
+* Increases support version to 0.7.9
+
 ## [v1.0.3](https://github.com/illandril/FoundryVTT-chat-enhancements/releases/tag/v1.0.3) (2020-11-08)
 **New Features:**
 * Double-click on a token's name in chat to pan the canvas to that token

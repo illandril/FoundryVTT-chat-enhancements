@@ -1,12 +1,12 @@
 {
   "type": "module",
   "name": "illandril-chat-enhancements",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "title": "Illandril's Chat Enhancements",
   "description": "Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
   "author": "Joe Spandrusyszyn",
   "minimumCoreVersion": "0.6.5",
-  "compatibleCoreVersion": "0.7.6",
+  "compatibleCoreVersion": "0.7.9",
   "styles": ["./styles.css"],
   "esmodules": ["./init.js"],
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
@@ -15,5 +15,5 @@
   "bugs": "https://github.com/illandril/FoundryVTT-chat-enhancements/issues",
   "changelog": "https://github.com/illandril/FoundryVTT-chat-enhancements/blob/master/CHANGELOG.md",
   "manifest": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/latest/download/module.json",
-  "download": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/download/v1.0.3/illandril-chat-enhancements.zip"
+  "download": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/download/v1.0.4/illandril-chat-enhancements.zip"
 }
