@@ -11,6 +11,8 @@ It currently does the following:
 1. Hovering over the speaker's name in a chat message act as if you hovered over the speaker's token
 1. Double-clicking the speaker's name in a chat message pans the canvas to show that token (if the token is visible)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O73HF15)
+
 # Installation
 1. Open the Configuration and Setup for your FoundryVTT server
 1. Open the Add-on Modules Tab
