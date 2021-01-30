@@ -3,6 +3,10 @@
   padding: 3px 0.5em;
 }
 
+.illandril-chat-enhancements--currentSpeakerToggle:hover {
+  opacity: 1;
+}
+
 .illandril-chat-enhancements--playerName {
   opacity: 0.5;
 }

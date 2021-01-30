@@ -5,7 +5,7 @@
     "version": "1.0.4",
     "library": "false",
     "manifestPlusVersion": "1.0.0",
-    "minimumCoreVersion": "0.6.5",
+    "minimumCoreVersion": "0.7.9",
     "compatibleCoreVersion": "0.7.9",
     "type": "module",
     "authors": [
@@ -19,7 +19,7 @@
     ],
     "dependencies": [],
     "conflicts": [],
-    "esmodules": ["./init.js"],
+    "esmodules": ["./scripts/index.js"],
     "styles": ["./styles.css"],
     "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
     "license": "./LICENSE",
