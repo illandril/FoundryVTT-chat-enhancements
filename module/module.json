@@ -2,7 +2,7 @@
     "name": "illandril-chat-enhancements",
     "title": "Illandril's Chat Enhancements",
     "description": "Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "library": "false",
     "manifestPlusVersion": "1.0.0",
     "minimumCoreVersion": "0.7.9",
@@ -43,7 +43,7 @@
     "bugs": "https://github.com/illandril/FoundryVTT-chat-enhancements/issues",
     "changelog": "https://github.com/illandril/FoundryVTT-chat-enhancements/blob/master/CHANGELOG.md",
     "manifest": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/latest/download/module.json",
-    "download": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/download/v1.1.0/module.zip",
+    "download": "https://github.com/illandril/FoundryVTT-chat-enhancements/releases/download/v1.1.1/module.zip",
     "media": [
         {
             "type": "screenshot",
