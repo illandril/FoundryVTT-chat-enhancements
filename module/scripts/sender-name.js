@@ -1,4 +1,4 @@
-import { CSS_PREFIX } from './module.js';
+import { CSS_PREFIX, log } from './module.js';
 import * as utils from './utils.js';
 
 const CSS_PLAYER_NAME = CSS_PREFIX + 'playerName';
@@ -29,7 +29,26 @@ Hooks.on('renderChatMessage', (message, html, speakerInfo) => {
 });
 
 function replaceSenderWithTokenName(messageSenderElem, speaker) {
-  messageSenderElem.text(getTokenName(speaker));
+  const alias = (speaker.alias || '').trim();
+  const name = (getTokenName(speaker) || '').trim();
+  if(alias !== name) {
+    replaceMatchingTextNodes(messageSenderElem[0], alias, name);
+  }
+}
+
+function replaceMatchingTextNodes(parent, match, replacement) {
+  if(!parent.hasChildNodes()) {
+    return;
+  }
+  for ( let node of parent.childNodes ) {
+    if(node.nodeType === Node.TEXT_NODE) {
+      if(node.wholeText.trim() === match) {
+        node.parentNode.replaceChild(document.createTextNode(replacement), node);
+      }
+    } else {
+      replaceMatchingTextNodes(node, match, replacement);
+    }
+  }
 }
 
 function appendPlayerName(messageSenderElem, author) {
