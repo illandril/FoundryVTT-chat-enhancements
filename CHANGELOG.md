@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.2](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.2) (2021-02-13)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.1...v1.1.2)
+
+**Other&nbsp;Changes**
+
+- Not compatible with Combat Utility Belt's "Hidden Names" feature [\#5](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/5)
+
 ## [v1.1.1](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.1) (2021-02-04)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.0...v1.1.1)
