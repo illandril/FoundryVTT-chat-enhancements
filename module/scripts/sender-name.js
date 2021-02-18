@@ -29,10 +29,10 @@ Hooks.on('renderChatMessage', (message, html, speakerInfo) => {
 });
 
 function replaceSenderWithTokenName(messageSenderElem, speaker) {
-  const alias = (speaker.alias || '').trim();
+  const actorName = (getActorName(speaker) || '').trim();
   const name = (getTokenName(speaker) || '').trim();
-  if(alias !== name) {
-    replaceMatchingTextNodes(messageSenderElem[0], alias, name);
+  if(actorName !== name) {
+    replaceMatchingTextNodes(messageSenderElem[0], actorName, name);
   }
 }
 
@@ -57,6 +57,14 @@ function appendPlayerName(messageSenderElem, author) {
   playerNameElem.appendChild(document.createTextNode(playerName));
   playerNameElem.classList.add(CSS_PLAYER_NAME);
   messageSenderElem.append(playerNameElem);
+}
+
+function getActorName(speaker) {
+  const actor = game.actors.get(speaker.actor);
+  if (actor) {
+    return actor.name;
+  }
+  return speaker.alias;
 }
 
 function getTokenName(speaker) {
