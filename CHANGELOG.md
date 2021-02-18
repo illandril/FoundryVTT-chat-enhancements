@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.1.3](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.3) (2021-02-18)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.2...v1.1.3)
+
+**Enhancements**
+
+- Add support for Bug Reporter [\#7](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/7)
+
+**Other&nbsp;Changes**
+
+- Replaces Turn Marker label from TurnMarker module when "Announce as Turn Marker" is enabled [\#8](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/8)
+
 ## [v1.1.2](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.2) (2021-02-13)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.1...v1.1.2)
