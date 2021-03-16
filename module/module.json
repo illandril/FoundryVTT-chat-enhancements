@@ -36,6 +36,11 @@
             "lang": "es",
             "name": "Español",
             "path": "lang/es.json"
+        },
+        {
+            "lang": "zh-tw",
+            "name": "正體中文",
+            "path": "lang/zh-tw.json"
         }
     ],
     "license": "./LICENSE",
