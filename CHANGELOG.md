@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.4) (2021-03-21)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.3...v1.1.4)
+
+**Other&nbsp;Changes**
+
+- Strips flavor text from Recovery Checks [\#6](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/6)
+
 ## [v1.1.3](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.3) (2021-02-18)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.2...v1.1.3)
