@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.5](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.5) (2021-04-02)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.4...v1.1.5)
+
+**Fixed&nbsp;Bugs**
+
+- zh-tw lang doesn't load properly [\#10](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/10)
+
 ## [v1.1.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.4) (2021-03-21)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.3...v1.1.4)
