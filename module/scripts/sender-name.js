@@ -107,6 +107,6 @@ function getTokenForScene(scene, tokenID) {
     return null;
   }
   return scene.data.tokens.find((token) => {
-    return token._id === tokenID;
+    return token.id === tokenID;
   });
 }

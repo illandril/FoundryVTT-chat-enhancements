@@ -11,8 +11,8 @@ currentSpeakerDisplay.addEventListener(
   'contextmenu',
   (event) => {
     speakerOptions.splice(0, speakerOptions.length);
-    const actors = game.actors.entities.filter(
-      (a) => a.hasPerm(game.user, 'OWNER') && utils.hasTokenOnSheet(a)
+    const actors = game.actors.contents.filter(
+      (a) => a.isOwner && utils.hasTokenOnSheet(a)
     );
     for (let actor of actors) {
       speakerOptions.push({
@@ -33,7 +33,7 @@ function updateSpeaker() {
   });
 }
 
-Hooks.once('ready', () => {
+Hooks.once('renderChatLog', () => {
   const chatControls = document.getElementById('chat-controls');
   chatControls.parentNode.insertBefore(currentSpeakerDisplay, chatControls);
 
