@@ -14,7 +14,7 @@ function getThisSceneTokenObjForActor(actorID) {
       return token.actor && token.actor.id === actorID;
     });
     if (thisSceneToken) {
-      token = getTokenObj(thisSceneToken._id);
+      token = getTokenObj(thisSceneToken.id);
     }
   }
   return token;

@@ -4,16 +4,18 @@
     "description": "Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
     "version": "1.1.5",
     "library": "false",
-    "manifestPlusVersion": "1.0.0",
+    "manifestPlusVersion": "1.2.0",
     "minimumCoreVersion": "0.8.5",
     "compatibleCoreVersion": "0.8.5",
     "type": "module",
+    "author": "Joe Spandrusyszyn (illandril)",
     "authors": [
         {
             "name": "Joe Spandrusyszyn (illandril)",
             "url": "https://github.com/illandril",
             "email": "foundry-modules@illandril.net",
             "discord": "joespan#3152",
+            "ko-fi": "illandril",
             "patreon": "illandril",
             "reddit": "u/illandril"
         }
