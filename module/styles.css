@@ -1,5 +1,5 @@
 .illandril-chat-enhancements--currentSpeaker {
-  flex: 0;
+  flex: 0 !important;
   padding: 3px 0.5em;
 }
 
