@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.2.2](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.2) (2021-08-19)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.1...v1.2.2)
+
+**Other&nbsp;Changes**
+
+- Foundry 8.9 causes layout issues. [\#12](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/12)
+
 ## [v1.2.1](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.1) (2021-06-18)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.0...v1.2.1)
@@ -7,10 +15,6 @@
 ## [v1.2.0](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.0) (2021-05-29)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.5...v1.2.0)
-
-**Other&nbsp;Changes**
-
-- Support Foundry 0.8.x [\#11](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/11)
 
 ## [v1.1.5](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.5) (2021-04-02)
 
@@ -62,6 +66,7 @@
 
 **Other&nbsp;Changes**
 
+- Support Foundry 0.8.x [\#11](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/11)
 - \[Foundry 0.7.x\] Remove isPC checks [\#2](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/2)
 
 ## [v1.0.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.0.4) (2020-12-20)
