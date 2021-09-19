@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.2.3](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.3) (2021-09-19)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.2...v1.2.3)
+
+**Fixed&nbsp;Bugs**
+
+- \[BUG\] Actor Selection List Goes Down and Off Screen [\#13](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/13)
+
 ## [v1.2.2](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.2) (2021-08-19)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.1...v1.2.2)
@@ -15,6 +23,10 @@
 ## [v1.2.0](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.0) (2021-05-29)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.1.5...v1.2.0)
+
+**Other&nbsp;Changes**
+
+- Support Foundry 0.8.x [\#11](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/11)
 
 ## [v1.1.5](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.5) (2021-04-02)
 
@@ -51,6 +63,7 @@
 **Other&nbsp;Changes**
 
 - Not compatible with Combat Utility Belt's "Hidden Names" feature [\#5](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/5)
+- \[Foundry 0.7.x\] Remove isPC checks [\#2](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/2)
 
 ## [v1.1.1](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.1) (2021-02-04)
 
@@ -63,11 +76,6 @@
 **Enhancements**
 
 - Add option to change "Current Speaker" [\#3](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/3)
-
-**Other&nbsp;Changes**
-
-- Support Foundry 0.8.x [\#11](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/11)
-- \[Foundry 0.7.x\] Remove isPC checks [\#2](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/2)
 
 ## [v1.0.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.0.4) (2020-12-20)
 
