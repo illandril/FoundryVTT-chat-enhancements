@@ -6,27 +6,6 @@ const CSS_CURRENT_SPEAKER = CSS_PREFIX + 'currentSpeaker';
 const currentSpeakerDisplay = document.createElement('div');
 currentSpeakerDisplay.classList.add(CSS_CURRENT_SPEAKER);
 
-const speakerOptions = [];
-currentSpeakerDisplay.addEventListener(
-  'contextmenu',
-  (event) => {
-    speakerOptions.splice(0, speakerOptions.length);
-    const actors = game.actors.contents.filter(
-      (a) => a.isOwner && utils.hasTokenOnSheet(a)
-    );
-    for (let actor of actors) {
-      speakerOptions.push({
-        name: actor.name,
-        icon: '',
-        callback: () => {
-          utils.selectActorToken(actor);
-        },
-      });
-    }
-  },
-  false
-);
-
 function updateSpeaker() {
   currentSpeakerDisplay.innerText = game.i18n.format('illandril-chat-enhancements.currentSpeaker', {
     name: ChatMessage.getSpeaker().alias,
@@ -40,8 +19,27 @@ Hooks.once('renderChatLog', () => {
   const currentSpeakerToggleMenu = new ContextMenu(
     $(chatControls.parentNode),
     '.' + CSS_CURRENT_SPEAKER,
-    speakerOptions
+    []
   );
+  const originalRender = currentSpeakerToggleMenu.render.bind(currentSpeakerToggleMenu);
+  currentSpeakerToggleMenu.render = (...args) => {
+    const actors = game.actors.contents.filter(
+      (a) => a.isOwner && utils.hasTokenOnSheet(a)
+    );
+    const speakerOptions = [];
+    for (let actor of actors) {
+      speakerOptions.push({
+        name: actor.name,
+        icon: '',
+        callback: () => {
+          utils.selectActorToken(actor);
+        },
+      });
+    }
+    currentSpeakerToggleMenu.menuItems = speakerOptions;
+    originalRender(...args);
+  };
+
 
   updateSpeaker();
 

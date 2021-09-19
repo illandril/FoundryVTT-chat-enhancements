@@ -3,6 +3,11 @@
   padding: 3px 0.5em;
 }
 
+.illandril-chat-enhancements--currentSpeaker #context-menu {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
 .illandril-chat-enhancements--currentSpeakerToggle:hover {
   opacity: 1;
 }
