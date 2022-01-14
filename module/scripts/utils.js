@@ -1,3 +1,5 @@
+import { log } from './module.js';
+
 function getThisSceneTokenObj(speaker) {
   let token = getTokenObj(speaker.token);
   if (!token) {
@@ -21,6 +23,10 @@ function getThisSceneTokenObjForActor(actorID) {
 }
 
 function getTokenObj(id) {
+  if(!canvas.ready) {
+    log.info(`getTokenObj(${id}) bailed - canvas is not ready yet`);
+    return undefined;
+  }
   return canvas.tokens.get(id);
 }
 
