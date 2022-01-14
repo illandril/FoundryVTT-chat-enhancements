@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.2.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.4) (2022-01-14)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.3...v1.2.4)
+
 ## [v1.2.3](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.2.3) (2021-09-19)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.2...v1.2.3)
@@ -63,7 +67,6 @@
 **Other&nbsp;Changes**
 
 - Not compatible with Combat Utility Belt's "Hidden Names" feature [\#5](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/5)
-- \[Foundry 0.7.x\] Remove isPC checks [\#2](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/2)
 
 ## [v1.1.1](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.1.1) (2021-02-04)
 
@@ -76,6 +79,10 @@
 **Enhancements**
 
 - Add option to change "Current Speaker" [\#3](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/3)
+
+**Other&nbsp;Changes**
+
+- \[Foundry 0.7.x\] Remove isPC checks [\#2](https://github.com/illandril/FoundryVTT-chat-enhancements/issues/2)
 
 ## [v1.0.4](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v1.0.4) (2020-12-20)
 
