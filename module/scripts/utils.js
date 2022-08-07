@@ -12,7 +12,7 @@ function getThisSceneTokenObjForActor(actorID) {
   let token = null;
   const scene = game.scenes.get(game.user.viewedScene);
   if (scene) {
-    const thisSceneToken = scene.data.tokens.find((token) => {
+    const thisSceneToken = scene.tokens.find((token) => {
       return token.actor && token.actor.id === actorID;
     });
     if (thisSceneToken) {

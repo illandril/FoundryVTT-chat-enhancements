@@ -76,8 +76,8 @@ function getTokenName(speaker) {
   }
   const actor = game.actors.get(speaker.actor);
   if (actor) {
-    if (actor.data.token) {
-      return actor.data.token.name;
+    if (actor.token) {
+      return actor.token.name;
     }
     if (actor.hasPlayerOwner) {
       return actor.name;
@@ -106,7 +106,7 @@ function getTokenForScene(scene, tokenID) {
   if (!scene) {
     return null;
   }
-  return scene.data.tokens.find((token) => {
+  return scene.tokens.find((token) => {
     return token.id === tokenID;
   });
 }

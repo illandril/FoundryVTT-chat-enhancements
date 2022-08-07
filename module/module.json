@@ -1,14 +1,15 @@
 {
-    "name": "illandril-chat-enhancements",
+    "id": "illandril-chat-enhancements",
     "title": "Illandril's Chat Enhancements",
     "description": "Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
     "version": "1.2.4",
     "library": "false",
     "manifestPlusVersion": "1.2.0",
-    "minimumCoreVersion": "0.8.5",
-    "compatibleCoreVersion": "9",
+    "compatibility": {
+        "minimum": 10,
+        "verified": 10
+    },
     "type": "module",
-    "author": "Joe Spandrusyszyn (illandril)",
     "authors": [
         {
             "name": "Joe Spandrusyszyn (illandril)",
@@ -20,8 +21,6 @@
             "reddit": "u/illandril"
         }
     ],
-    "dependencies": [],
-    "conflicts": [],
     "esmodules": [
         "./scripts/index.js"
     ],
