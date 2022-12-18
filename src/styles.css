@@ -1,0 +1,28 @@
+.illandril-chat-enhancements--current-speaker {
+  flex: 0 !important;
+  padding: 3px 0.5em;
+}
+
+.illandril-chat-enhancements--current-speaker #context-menu {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.illandril-chat-enhancements--token-thumbnail {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+  height: 1.5em;
+  border: none;
+}
+
+.illandril-chat-enhancements--player-name {
+  opacity: 0.5;
+}
+
+.illandril-chat-enhancements--player-name::before {
+  content: ' [';
+}
+
+.illandril-chat-enhancements--playerName::after {
+  content: ']';
+}

@@ -1,0 +1,42 @@
+{
+  "id": "illandril-chat-enhancements",
+  "title": "Illandril's Chat Enhancements",
+  "compatibility": {
+    "minimum": 10,
+    "verified": 10
+  },
+  "esmodules": [
+    "module.js"
+  ],
+  "styles": [
+    "styles.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-tw.json"
+    }
+  ],
+  "license": "LICENSE",
+  "media": [
+    {
+      "type": "screenshot",
+      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/master/screenshots/example-a.png"
+    },
+    {
+      "type": "screenshot",
+      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/master/screenshots/example-preview.png"
+    }
+  ]
+}

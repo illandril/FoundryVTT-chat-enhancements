@@ -1,0 +1,52 @@
+{
+  "name": "@illandril/foundryvtt-chat-enhancements",
+  "version": "2.0.0",
+  "description": "Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
+  "main": "dist/module.json",
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist/**",
+    "prebuild": "npm run clean",
+    "build": "rollup --config rollup.config.js",
+    "build:watch": "npm run build -- --watch",
+    "build:publish": "npm run build -- --environment BUILD:production",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build:publish",
+    "preversion": "npm run validate",
+    "validate": "run-s type-check lint test:coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/illandril/FoundryVTT-chat-enhancements.git"
+  },
+  "keywords": [
+    "FoundryVTT"
+  ],
+  "author": "Joe Spandrusyszyn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/issues"
+  },
+  "homepage": "https://github.com/illandril/FoundryVTT-chat-enhancements#readme",
+  "dependencies": {
+    "@illandril/foundryvtt-utils": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@illandril/eslint-config-foundryvtt": "^1.5.0",
+    "@illandril/foundryvtt-types": "^1.5.1",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-json": "^5.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^3.7.3",
+    "rollup-plugin-copy": "^3.4.0"
+  }
+}

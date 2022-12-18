@@ -1,0 +1,13 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": [
+          ">0.5% and supports es6-module and not dead",
+          "firefox esr"
+        ]
+      }
+    }],
+    ["@babel/preset-typescript"]
+  ]
+}
