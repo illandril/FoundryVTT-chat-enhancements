@@ -2,7 +2,7 @@
   "root": true,
   "extends": ["@illandril/eslint-config-foundryvtt"],
   "parserOptions": {
-    "project": "./tsconfig.eslint.json"
+    "project": "./tsconfig.json"
   },
   "ignorePatterns": [
     "/.history",

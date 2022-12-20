@@ -1,5 +1,5 @@
 import module from './module';
-import * as utils from './utils.js';
+import * as utils from './utils';
 
 const cssPlayerName = module.cssPrefix.child('player-name');
 
@@ -13,13 +13,16 @@ Hooks.on('renderChatMessage', (message, element) => {
     const messageParent = element.get(0);
     const messageSenderElem = messageParent?.querySelector('.message-sender');
     if (!messageSenderElem) {
-      module.logger.error(`Could not update Chat Message sender for ${message.id} - .message-sender wasn't where expected`);
+      module.logger.error(`Could not update Chat Message sender for ${message.id} - .message-sender was not where it was expected`);
       return;
     }
     const playerName = message.user.name;
     const playerNameElem = document.createElement('span');
+    playerNameElem.appendChild(document.createTextNode('['));
     playerNameElem.appendChild(document.createTextNode(playerName));
+    playerNameElem.appendChild(document.createTextNode(']'));
     playerNameElem.classList.add(cssPlayerName);
+    messageSenderElem.append(document.createTextNode(' '));
     messageSenderElem.append(playerNameElem);
 
     messageSenderElem.addEventListener('mouseenter', (event) => {

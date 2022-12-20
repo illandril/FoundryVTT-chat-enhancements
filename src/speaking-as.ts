@@ -7,12 +7,17 @@ const cssTokenThumbnail = module.cssPrefix.child('token-thumbnail');
 const currentSpeakerDisplay = document.createElement('div');
 currentSpeakerDisplay.classList.add(cssCurrentSpeaker);
 
-function updateSpeaker() {
-  currentSpeakerDisplay.innerText = game.i18n.format('illandril-chat-enhancements.currentSpeaker',
-    { name: ChatMessage.getSpeaker().alias || '???' });
-}
+const updateSpeaker = () => {
+  const name = ChatMessage.getSpeaker().alias || '???';
+  currentSpeakerDisplay.innerText = module.localize('currentSpeaker', { name });
+};
 
 const speakerImage = (imageSource: string) => `<img src="${encodeURI(imageSource || CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
+
+const sortByName = (option1: { name: string }, option2: { name: string }) => option1.name.localeCompare(option2.name);
+const releaseAllTokens = () => {
+  game.canvas.tokens?.controlled.forEach((token) => token.release());
+};
 
 const getSpeakerOptions = () => {
   const speakerOptions: ContextMenuEntry[] = [];
@@ -28,15 +33,13 @@ const getSpeakerOptions = () => {
       },
     });
   }
-  speakerOptions.sort((option1, option2) => option1.name.localeCompare(option2.name));
+  speakerOptions.sort(sortByName);
 
   if (game.user && !game.user.character) {
     speakerOptions.unshift({
       name: game.user.name,
       icon: speakerImage(game.user.avatar),
-      callback: () => {
-        game.canvas.tokens?.controlled.forEach((token) => token.release());
-      },
+      callback: releaseAllTokens,
     });
   }
 
@@ -47,7 +50,7 @@ Hooks.once('renderChatLog', (_application, element) => {
   const chatParent = element.get(0);
   const chatControls = chatParent?.querySelector('#chat-controls');
   if (!chatControls || chatControls.parentElement !== chatParent) {
-    module.logger.error('Could not render Current Speaker Display - #chat-controls wasn\'t where expected');
+    module.logger.error('Could not render Current Speaker Display - #chat-controls was not where it was expected');
     return;
   }
   chatParent.insertBefore(currentSpeakerDisplay, chatControls);

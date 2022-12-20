@@ -1,10 +1,10 @@
 /* eslint-disable import/no-named-as-default-member */
 import * as Manifest from '@illandril/foundryvtt-utils/dist/Manifest.js';
 import { babel } from '@rollup/plugin-babel';
-import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import fs from 'fs-extra';
 import copy from 'rollup-plugin-copy';
+import globals, { description, repositoryURL } from './globals.js';
 
 const target = 'dist';
 const isProduction = process.env.BUILD === 'production';
@@ -14,11 +14,11 @@ export default {
   output: {
     file: `${target}/module.js`,
     format: 'es',
+    banner: Object.entries(globals).map(([key, value]) => `const ${key} = ${JSON.stringify(value)};\n`).join(''),
     sourcemap: true,
     sourcemapPathTransform: (sourcePath) => sourcePath.replace(/^..[/\\]?/, ''),
   },
   plugins: [
-    json(),
     nodeResolve({ extensions: ['.js', '.ts'] }),
     babel({
       babelHelpers: 'bundled',
@@ -34,15 +34,14 @@ export default {
     {
       name: 'moduleJSON',
       buildStart: async () => {
-        const { version, description, repository } = await fs.readJSON('package.json');
         const manifestData = await fs.readJSON('src/manifestData.json');
 
         return fs.writeJSON(`${target}/module.json`, Manifest.generate({
           ...manifestData,
           authors: [Manifest.IllandrilAuthorInfo],
-          version,
+          ...globals,
           description,
-          repositoryURL: repository.url,
+          repositoryURL,
         }), { spaces: 2 });
       },
     },

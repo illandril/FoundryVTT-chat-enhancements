@@ -18,11 +18,3 @@
 .illandril-chat-enhancements--player-name {
   opacity: 0.5;
 }
-
-.illandril-chat-enhancements--player-name::before {
-  content: ' [';
-}
-
-.illandril-chat-enhancements--playerName::after {
-  content: ']';
-}
