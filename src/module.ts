@@ -1,11 +1,13 @@
 import { Module } from '@illandril/foundryvtt-utils';
 
 declare global {
-  const id: string;
-  const title: string;
-  const version: string;
-  const bugs: string;
+  const moduleMetadata: {
+    readonly id: string
+    readonly title: string
+    readonly version: string
+    readonly bugs: string
+  };
 }
-const module = new Module({ id, title, version, bugs });
+const module = new Module(moduleMetadata);
 
 export default module;

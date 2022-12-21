@@ -1,5 +1,6 @@
+import { hoverIn, hoverOut } from './hover';
 import module from './module';
-import * as utils from './utils';
+import { panToSpeaker, panToToken } from './panTo';
 
 const cssCurrentSpeaker = module.cssPrefix.child('current-speaker');
 const cssTokenThumbnail = module.cssPrefix.child('token-thumbnail');
@@ -29,7 +30,7 @@ const getSpeakerOptions = () => {
       icon: speakerImage(token.document.texture.src),
       callback: () => {
         token.control();
-        utils.panToToken(token);
+        panToToken(token);
       },
     });
   }
@@ -64,13 +65,13 @@ Hooks.once('renderChatLog', (_application, element) => {
   updateSpeaker();
 
   currentSpeakerDisplay.addEventListener('mouseenter', (event) => {
-    utils.hoverIn(event, ChatMessage.getSpeaker());
+    hoverIn(event, ChatMessage.getSpeaker());
   });
   currentSpeakerDisplay.addEventListener('mouseleave', (event) => {
-    utils.hoverOut(event);
+    hoverOut(event);
   });
   currentSpeakerDisplay.addEventListener('dblclick', () => {
-    utils.panToSpeaker(ChatMessage.getSpeaker());
+    panToSpeaker(ChatMessage.getSpeaker());
   });
 });
 

@@ -9,10 +9,12 @@ const bugs = packageJSON.bugs.url;
 const repositoryURL = packageJSON.repository.url;
 
 export default {
-  id,
-  version,
-  title,
-  bugs,
+  moduleMetadata: {
+    id,
+    version,
+    title,
+    bugs,
+  },
 };
 
 export { description, repositoryURL };

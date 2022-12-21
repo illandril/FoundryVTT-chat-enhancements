@@ -39,7 +39,7 @@ export default {
         return fs.writeJSON(`${target}/module.json`, Manifest.generate({
           ...manifestData,
           authors: [Manifest.IllandrilAuthorInfo],
-          ...globals,
+          ...globals.moduleMetadata,
           description,
           repositoryURL,
         }), { spaces: 2 });
