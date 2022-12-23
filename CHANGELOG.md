@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.1.3](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v2.1.3) (2022-08-07)
+
+[Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v2.0.0...v2.1.3)
+
 ## [v2.0.0](https://github.com/illandril/FoundryVTT-chat-enhancements/tree/v2.0.0) (2022-08-07)
 
 [Full Changelog](https://github.com/illandril/FoundryVTT-chat-enhancements/compare/v1.2.4...v2.0.0)
