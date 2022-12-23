@@ -35,9 +35,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: read
       contents: write
+      packages: read
     steps:
       - name: Extract version number
         id: version
