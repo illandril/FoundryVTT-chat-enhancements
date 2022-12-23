@@ -37,6 +37,7 @@ jobs:
     permissions:
       contents: read
       packages: read
+      contents: write
     steps:
       - name: Extract version number
         id: version
