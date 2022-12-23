@@ -21,6 +21,7 @@ jobs:
       - name: Update changelog
         uses: heinrichreimer/github-changelog-generator-action@v2.2
         with:
+          id: changelog
           token: ${{ secrets.GITHUB_TOKEN }}
           issuesWoLabels: true
           prWoLabels: true
@@ -35,11 +36,18 @@ jobs:
           issuesLabel: '**Other&nbsp;Changes**'
           prLabel: '**Merged&nbsp;Pull&nbsp;Requests**'
 
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: markdown
+      - name: Edit Wiki
+        run: |
+          echo ${{ steps.version.outputs.result }} >> changelog.md
       - name: Push updated changelog
         uses: EndBug/add-and-commit@v7
         with:
-          add: CHANGELOG.md
+          add: changelog.md
           author_name: Changelog Updater
           author_email: github@illandril.net
-          branch: main
+          branch: master
           message: Updated changelog
