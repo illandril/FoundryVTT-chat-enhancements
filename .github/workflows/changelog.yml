@@ -19,9 +19,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Update changelog
+        id: changelog
         uses: heinrichreimer/github-changelog-generator-action@v2.2
         with:
-          id: changelog
           token: ${{ secrets.GITHUB_TOKEN }}
           issuesWoLabels: true
           prWoLabels: true
@@ -42,12 +42,13 @@ jobs:
           path: markdown
       - name: Edit Wiki
         run: |
-          echo ${{ steps.version.outputs.result }} >> changelog.md
+          echo ${{ steps.changelog.outputs.result }} >> changelog.md
+          git config --local user.email "gitub-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add changelog.md
+          git commit -m "Add changes"
       - name: Push updated changelog
-        uses: EndBug/add-and-commit@v7
+        uses: ad-m/github-push-action@master
         with:
-          add: changelog.md
-          author_name: Changelog Updater
-          author_email: github@illandril.net
-          branch: master
-          message: Updated changelog
+          repository: ${{github.repository}}.wiki
+          github_token: ${{ secrets.GITHUB_TOKEN }}
