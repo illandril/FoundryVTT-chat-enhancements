@@ -36,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
     steps:
       - name: Extract version number
         id: version
@@ -43,6 +44,7 @@ jobs:
         with:
           script: return context.ref.substring(1);
           result-encoding: string
+
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
