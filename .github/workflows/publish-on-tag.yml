@@ -42,7 +42,7 @@ jobs:
         id: version
         uses: actions/github-script@v6
         with:
-          script: return context.ref.substring(1);
+          script: return context.ref.substring(11);
           result-encoding: string
 
       - uses: actions/checkout@v3
@@ -96,5 +96,5 @@ jobs:
           add: CHANGELOG.md
           author_name: Release Auto-Commit
           author_email: github@illandril.net
-          branch: master
+          branch: main
           message: Updates version info for ${{ steps.version.outputs.result }}
