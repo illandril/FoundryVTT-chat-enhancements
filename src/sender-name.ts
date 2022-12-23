@@ -2,6 +2,9 @@ import { hoverIn, hoverOut } from './hover';
 import module from './module';
 import { panToSpeaker } from './panTo';
 
+const senderNameSetting = module.settings.register('sender-name', Boolean, true, { hasHint: true, requiresReload: true });
+const speakerFocusSetting = module.settings.register('speaker-focus', Boolean, true, { hasHint: true, requiresReload: true });
+
 const cssPlayerName = module.cssPrefix.child('player-name');
 
 const createPlayerNameElem = (message: ChatMessage) => {
@@ -47,8 +50,12 @@ Hooks.on('renderChatMessage', (message, element) => {
     return;
   }
 
-  messageSenderElem.append(document.createTextNode(' '));
-  messageSenderElem.append(createPlayerNameElem(message));
+  if (senderNameSetting.get()) {
+    messageSenderElem.append(document.createTextNode(' '));
+    messageSenderElem.append(createPlayerNameElem(message));
+  }
 
-  addSpeakerMouseListeners(messageSenderElem, message.speaker);
+  if (speakerFocusSetting.get()) {
+    addSpeakerMouseListeners(messageSenderElem, message.speaker);
+  }
 });

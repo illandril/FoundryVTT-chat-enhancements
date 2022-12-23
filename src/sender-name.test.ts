@@ -4,6 +4,15 @@ import './sender-name';
 
 const chance = new Chance();
 
+jest.spyOn(game.settings, 'get').mockImplementation((namespace: string, key: string) => {
+  if (namespace === 'illandril-chat-enhancements') {
+    if (key === 'sender-name' || key === 'speaker-focus') {
+      return true as never;
+    }
+  }
+  throw new Error(`Not Mocked: game.settings.get(${JSON.stringify(namespace)}, ${JSON.stringify(key)})`);
+});
+
 const mockChatLog = (...chatMessages: HTMLLIElement[]) => {
   const chatSidebarTab = document.createElement('section');
   chatSidebarTab.classList.add('tab', 'sidebar-tab', 'chat-sidebar', 'directory', 'flexcol', 'active');
@@ -93,4 +102,5 @@ it.todo('doesn\'t modify private whispers');
 it.todo('doesn\'t modify other chat messages');
 it.todo('hover in/out');
 it.todo('double click');
-it.todo('settings (once they get added)');
+it.todo('sender-name setting on/off');
+it.todo('speaker-focus setting on/off');

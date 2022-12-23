@@ -1,3 +1,27 @@
 {
-  "illandril-chat-enhancements.currentSpeaker": "You: {name}"
+  "illandril-chat-enhancements": {
+    "currentSpeaker": "You: {name}",
+    "setting": {
+      "sender-name": {
+        "label": "Show Sender Name",
+        "hint": "Shows the name of the User that sent a chat message after the Token name."
+      },
+      "speaker-focus": {
+        "label": "Allow Speaker Focus",
+        "hint": "Hovering over the speaker name for a chat message will highlight the associated token. Double-clicking the speaker name will pan to the token."
+      },
+      "speaking-as": {
+        "label": "Show Speaking As",
+        "hint": "Shows the name of the token you will speak as (or your user name, if you will not speak as a token) between the Chat Log and the Chat Message input."
+      },
+      "speaking-as-selector": {
+        "label": "Allow Speaking As Selection",
+        "hint": "Right-clicking on the Speaking As indicator will show a menu of all the controllable tokens for the player. Selecting a token name will select that token, making the user speak as that token."
+      },
+      "speaking-as-focus": {
+        "label": "Allow Speaking As Focus",
+        "hint": "Hovering over the Speaking As indicator will highlight the associated token. Double-clicking the Speaking As indicator will pan to the token."
+      }
+    }
+  }
 }
