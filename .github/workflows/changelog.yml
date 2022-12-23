@@ -36,19 +36,8 @@ jobs:
           issuesLabel: '**Other&nbsp;Changes**'
           prLabel: '**Merged&nbsp;Pull&nbsp;Requests**'
 
-      - uses: actions/checkout@v2
+      - uses: SwiftDocOrg/github-wiki-publish-action@v1
         with:
-          repository: ${{github.repository}}.wiki
-          path: markdown
-      - name: Edit Wiki
-        run: |
-          echo ${{ steps.changelog.outputs.result }} >> changelog.md
-          git config --local user.email "gitub-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add changelog.md
-          git commit -m "Add changes"
-      - name: Push updated changelog
-        uses: ad-m/github-push-action@master
-        with:
-          repository: ${{github.repository}}.wiki
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          path: "CHANGELOG.md"
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
