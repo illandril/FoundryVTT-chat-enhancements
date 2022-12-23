@@ -40,7 +40,7 @@ jobs:
     steps:
       - name: Extract version number
         id: version
-        uses: actions/github-script@6.3.3
+        uses: actions/github-script@v6
         with:
           script: return context.ref.substring(1);
           result-encoding: string
