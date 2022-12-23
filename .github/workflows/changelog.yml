@@ -35,9 +35,12 @@ jobs:
           securityLabel: '**Security&nbsp;Fixes**'
           issuesLabel: '**Other&nbsp;Changes**'
           prLabel: '**Merged&nbsp;Pull&nbsp;Requests**'
-
+      - name: Prepare changes
+        run: |
+          mkdir "wiki"
+          mv "CHANGELOG.md" "wiki/changelog.md"
       - uses: SwiftDocOrg/github-wiki-publish-action@v1
         with:
-          path: "CHANGELOG.md"
+          path: "wiki"
         env:
           GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
