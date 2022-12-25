@@ -30,11 +30,11 @@
   "media": [
     {
       "type": "screenshot",
-      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/master/screenshots/example-a.png"
+      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/main/screenshots/example-a.png"
     },
     {
       "type": "screenshot",
-      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/master/screenshots/example-preview.png"
+      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/main/screenshots/example-preview.png"
     }
   ]
 }
