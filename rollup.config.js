@@ -49,7 +49,7 @@ export default {
       name: 'lock',
       buildStart: async () => {
         if (!isProduction) {
-          await fs.outputFile(`${target}/illandril-chat-enhancements.lock`, '');
+          await fs.outputFile(`${target}/${globals.moduleMetadata.id}.lock`, '');
         }
       },
     },
