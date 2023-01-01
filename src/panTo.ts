@@ -6,7 +6,6 @@ export const panToSpeaker = (speaker: SpeakerType) => {
 
 export const panToToken = (token?: Token) => {
   if (token?.isVisible) {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    game.canvas.animatePan({ ...token.center, duration: 250 });
+    void game.canvas.animatePan({ ...token.center, duration: 250 });
   }
 };

@@ -1,2 +1,2 @@
-import './speaking-as';
 import './sender-name';
+import './speaking-as';

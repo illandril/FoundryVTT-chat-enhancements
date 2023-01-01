@@ -17,7 +17,7 @@ const updateSpeaker = () => {
   currentSpeakerDisplay.innerText = module.localize('currentSpeaker', { name });
 };
 
-const speakerImage = (imageSource: string) => `<img src="${encodeURI(imageSource || CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
+const speakerImage = (imageSource: string) => `<img src="${encodeURI(imageSource || foundry.CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
 
 const sortByName = (option1: { name: string }, option2: { name: string }) => option1.name.localeCompare(option2.name);
 const releaseAllTokens = () => {
