@@ -15,7 +15,7 @@ export default {
     file: `${target}/module.js`,
     format: 'es',
     banner: Object.entries(globals).map(([key, value]) => `const ${key} = ${JSON.stringify(value)};\n`).join(''),
-    sourcemap: true,
+    sourcemap: isDevelopment,
     sourcemapPathTransform: (sourcePath) => sourcePath.replace(/^..[/\\]?/, ''),
   },
   plugins: [
