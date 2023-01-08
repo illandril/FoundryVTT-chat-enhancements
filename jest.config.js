@@ -4,12 +4,10 @@
  */
 
 import utilGlobals from '@illandril/foundryvtt-utils/dist/tests/globals.js';
+import deepmerge from 'deepmerge';
 import localGlobals from './globals.js';
 
-const globals = {
-  ...utilGlobals,
-  ...localGlobals,
-};
+const globals = deepmerge(utilGlobals, localGlobals);
 
 export default {
   // Automatically clear mock calls, instances, contexts and results before every test
@@ -139,12 +137,13 @@ export default {
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   setupFiles: [
+    '@illandril/foundryvtt-utils/dist/tests/setup',
     './src/tests/setup.ts',
   ],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
-    '@illandril/foundryvtt-utils/dist/tests/setup',
+    '@illandril/foundryvtt-utils/dist/tests/setupAfterEnv',
     './src/tests/setupAfterEnv.ts',
   ],
 
