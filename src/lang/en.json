@@ -2,6 +2,10 @@
   "illandril-chat-enhancements": {
     "currentSpeaker": "You: {name}",
     "setting": {
+      "debug": {
+        "label": "Debug Mode",
+        "hint": "Leave this disabled unless specifically asked to enable it by Illandril (otherwise, it will slow things down)."
+      },
       "sender-name": {
         "label": "Show Sender Name",
         "hint": "Shows the name of the User that sent a chat message after the Token name."
