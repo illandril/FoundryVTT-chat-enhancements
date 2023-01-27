@@ -55,7 +55,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-fail-on-console": "^3.0.2",
     "npm-run-all2": "^6.0.4",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.1.2",
     "rollup": "^3.11.0",
     "rollup-plugin-copy": "^3.4.0"
   }
