@@ -4,7 +4,7 @@
   "description": "Illandril's Chat Enhancements: Enhances the chat by showing player names in IC messages, replacing actor names with token names, and showing who you are currently speaking as.",
   "type": "module",
   "scripts": {
-    "clean": "rimraf dist/**",
+    "clean": "rimraf dist",
     "prebuild:run": "npm run clean",
     "build": "npm run build:run -- --environment BUILD:production",
     "build:watch": "npm run build:dev -- --watch",
@@ -33,21 +33,21 @@
   },
   "homepage": "https://github.com/illandril/FoundryVTT-chat-enhancements#readme",
   "dependencies": {
-    "@illandril/foundryvtt-utils": "^6.1.2"
+    "@illandril/foundryvtt-utils": "^8.0.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.20.11",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.18.6",
-    "@illandril/eslint-config-foundryvtt": "^1.8.0",
-    "@illandril/foundryvtt-types": "^2.3.4",
+    "@illandril/eslint-config-foundryvtt": "^1.8.3",
+    "@illandril/foundryvtt-types": "^4.9.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@types/chance": "^1.1.3",
     "@types/jest": "^29.4.0",
-    "babel-jest": "^29.4.0",
+    "babel-jest": "^29.4.1",
     "babel-preset-minify": "^0.5.2",
     "chance": "^1.1.9",
     "cross-env": "^7.0.3",
@@ -55,8 +55,8 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-fail-on-console": "^3.0.2",
     "npm-run-all2": "^6.0.4",
-    "rimraf": "^3.0.2",
-    "rollup": "^3.11.0",
+    "rimraf": "^4.1.2",
+    "rollup": "^3.12.0",
     "rollup-plugin-copy": "^3.4.0"
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@illandril/foundryvtt-utils';
+import { ModuleUtils } from '@illandril/foundryvtt-utils';
 
 declare global {
   const moduleMetadata: {
@@ -8,6 +8,6 @@ declare global {
     readonly bugs: string
   };
 }
-const module = new Module(moduleMetadata);
+const module = new ModuleUtils(moduleMetadata);
 
 export default module;
