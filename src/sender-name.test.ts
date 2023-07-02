@@ -7,7 +7,7 @@ const chance = new Chance();
 jest.spyOn(game.settings, 'get').mockImplementation((namespace: string, key: string) => {
   if (namespace === 'illandril-chat-enhancements') {
     if (key === 'sender-name' || key === 'speaker-focus') {
-      return true as never;
+      return true;
     }
   }
   throw new Error(`Not Mocked: game.settings.get(${JSON.stringify(namespace)}, ${JSON.stringify(key)})`);

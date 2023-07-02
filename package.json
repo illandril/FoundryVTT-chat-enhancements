@@ -40,7 +40,7 @@
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@illandril/eslint-config-foundryvtt": "^1.8.4",
-    "@illandril/foundryvtt-types": "^5.0.1",
+    "@illandril/foundryvtt-types": "^5.0.2",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@testing-library/dom": "^9.3.1",
