@@ -30,7 +30,7 @@ const getSpeakerOptions = () => {
   const tokens = game.canvas.tokens?.ownedTokens || [];
   for (const token of tokens) {
     speakerOptions.push({
-      name: token.name,
+      name: token.name || 'Unknown',
       icon: speakerImage(token.document.texture.src),
       callback: () => {
         token.control();
