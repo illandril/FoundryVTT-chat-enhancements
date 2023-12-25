@@ -38,7 +38,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.23.0",
     "@babel/preset-env": "^7.23.6",
-    "@babel/preset-typescript": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.3",
     "@illandril/eslint-config-foundryvtt": "^1.8.7",
     "@illandril/foundryvtt-types": "^5.1.4",
     "@rollup/plugin-babel": "^6.0.4",
