@@ -12,6 +12,10 @@ jest.spyOn(game.settings, 'get').mockImplementation((namespace: string, key: str
   }
   throw new Error(`Not Mocked: game.settings.get(${JSON.stringify(namespace)}, ${JSON.stringify(key)})`);
 });
+(game as { system: Partial<System> }).system = {
+  id: 'example',
+  version: '1.2.3',
+};
 
 const mockChatLog = (...chatMessages: HTMLLIElement[]) => {
   const chatSidebarTab = document.createElement('section');

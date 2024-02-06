@@ -1,6 +1,7 @@
 import { hoverIn, hoverOut } from './hover';
 import module from './module';
 import { panToSpeaker } from './panTo';
+import { is5e3OrNewer } from './systems/dnd5e';
 
 const senderNameSetting = module.settings.register('sender-name', Boolean, true, { hasHint: true, requiresReload: true });
 const speakerFocusSetting = module.settings.register('speaker-focus', Boolean, true, { hasHint: true, requiresReload: true });
@@ -50,12 +51,29 @@ Hooks.on('renderChatMessage', (message, element) => {
     return;
   }
 
-  if (senderNameSetting.get()) {
-    messageSenderElem.append(document.createTextNode(' '));
-    messageSenderElem.append(createPlayerNameElem(message));
+  if (!is5e3OrNewer()) {
+    if (senderNameSetting.get()) {
+      messageSenderElem.append(document.createTextNode(' '));
+      messageSenderElem.append(createPlayerNameElem(message));
+    }
   }
 
   if (speakerFocusSetting.get()) {
     addSpeakerMouseListeners(messageSenderElem, message.speaker);
+  }
+});
+
+Hooks.on('dnd5e.renderChatMessage', (message, element) => {
+  if (!is5e3OrNewer()) {
+    return;
+  }
+
+  if (!senderNameSetting.get()) {
+    const senderSubtitle = element.querySelector<HTMLSpanElement>('.message-sender .name-stacked .subtitle');
+    if (!senderSubtitle) {
+      module.logger.warn('Could not find .name-stacked .subtitle in dnd5e ChatMessage element', message, element);
+    } else {
+      senderSubtitle.style.display = 'none';
+    }
   }
 });
