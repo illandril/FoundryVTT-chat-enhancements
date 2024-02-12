@@ -14,3 +14,4 @@ It currently does the following:
 1. Allows you to quickly select any actor you own's token (as long as it's on the same scene) by right-clicking the name of the actor you are currently controlling
 1. Hovering over the speaker's name in a chat message act as if you hovered over the speaker's token
 1. Double-clicking the speaker's name in a chat message pans the canvas to show that token (if the token is visible)
+1. An option to prune the chat log down whenver a GM opens Foundry if it is above a configurable threshold
