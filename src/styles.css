@@ -18,3 +18,10 @@
 .illandril-chat-enhancements--player-name {
   opacity: 0.5;
 }
+
+.illandril-chat-enhancements--clear-chat--confirm-message {
+  white-space: pre-wrap;
+  margin-bottom: 0.5rem;
+  border: 0.125rem dashed var(--color-level-error, #a00);
+  padding: 0.5rem;
+}

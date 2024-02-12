@@ -6,6 +6,24 @@
         "label": "Debug Mode",
         "hint": "Leave this disabled unless specifically asked to enable it by Illandril (otherwise, it will slow things down)."
       },
+      "clear-chat": {
+        "enabled": {
+          "label": "Clear Chat on Load",
+          "hint": "If enabled, the chat log will be cleaned up whenever a GM loads Foundry and there are more than Clear Trigger chat messages in the chat log. WARNING: Chat messages that are deleted cannot be recovered - they will be lost forever."
+        },
+        "confirm": {
+          "label": "Confirm Before Deleting",
+          "hint": "(Recommended) If enabled, the GM will be prompted to confirm before the chat messages are deleted."
+        },
+        "trigger": {
+          "label": "Clear Trigger",
+          "hint": "If Clear Chat on Load is enabled, and there are more than this many messages when a GM loads Foundry, the Chat Log will be cleaned up. Note: Must be equal to or larger than Clear Target."
+        },
+        "target": {
+          "label": "Clear Target",
+          "hint": "If Clear Chat on Load is enabled, and the Clear Trigger is met, all but this many messages will be deleted. Note: Must be a non-negative number."
+        }
+      },
       "sender-name": {
         "label": "Show Sender Name",
         "hint": "Shows the name of the User that sent a chat message after the Token name."
@@ -25,6 +43,16 @@
       "speaking-as-focus": {
         "label": "Allow Speaking As Focus",
         "hint": "Hovering over the Speaking As indicator will highlight the associated token. Double-clicking the Speaking As indicator will pan to the token."
+      }
+    },
+    "clear-chat": {
+      "confirm": {
+        "title": "Illandril's Chat Enhancements - Chat Log Cleaner",
+        "message": "More than {trigger} messages were detected in the chat log.\nWould you like to delete all but {target} messages?\n\n{count} of {total} messages will be deleted.\n\nDeleted messages cannot be recovered. Export your Chat Log before clicking Yes (and confirm the export contents) if you want to save a copy."
+      },
+      "notification": {
+        "deleting": "Illandril's Chat Enhancements - Chat Log Cleaner - Deleting {count} Chat Messages...",
+        "deleted": "Illandril's Chat Enhancements - Chat Log Cleaner - Deleted {count} Chat Messages!"
       }
     }
   }
