@@ -1,14 +1,10 @@
 {
   "compatibility": {
-    "minimum": 10,
-    "verified": 11
+    "minimum": 12,
+    "verified": 12
   },
-  "esmodules": [
-    "module.js"
-  ],
-  "styles": [
-    "styles.css"
-  ],
+  "esmodules": ["module.js"],
+  "styles": ["styles.css"],
   "languages": [
     {
       "lang": "en",
@@ -28,6 +24,10 @@
   ],
   "license": "LICENSE",
   "media": [
+    {
+      "type": "setup",
+      "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/main/screenshots/setup.png"
+    },
     {
       "type": "screenshot",
       "url": "https://github.com/illandril/FoundryVTT-chat-enhancements/raw/main/screenshots/example-a.png"

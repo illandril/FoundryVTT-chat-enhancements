@@ -1,0 +1,16 @@
+name: Issue / PR assignment
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  auto-assign:
+    uses: illandril/FoundryVTT-package-release-action/.github/workflows/illandril-assign.yml@main

@@ -43,7 +43,11 @@ Hooks.on('ready', () => {
 
 const sweepChatLog = (trigger: number, target: number) => {
   if (game.messages.size <= trigger) {
-    module.logger.debug('Chat Log not cleared - fewer (or equal) messages than the trigger', game.messages.size, trigger);
+    module.logger.debug(
+      'Chat Log not cleared - fewer (or equal) messages than the trigger',
+      game.messages.size,
+      trigger,
+    );
     return;
   }
 
@@ -54,9 +58,11 @@ const sweepChatLog = (trigger: number, target: number) => {
     module.logger.warn('Deleting', toDelete.length, 'messages');
     await ChatMessage.deleteDocuments(toDelete);
     module.logger.warn('Deleted', toDelete.length, 'messages');
-    ui.notifications.info(module.localize('clear-chat.notification.deleted', {
-      count: toDelete.length.toString(),
-    }));
+    ui.notifications.info(
+      module.localize('clear-chat.notification.deleted', {
+        count: toDelete.length.toString(),
+      }),
+    );
   };
 
   if (!Confirm.get()) {
@@ -79,12 +85,16 @@ const getMessagesToDelete = (target: number) => {
 
 const cleanupOnConfirm = (trigger: number, target: number, toDelete: string[], cleanup: () => Promise<void>) => {
   const message = document.createElement('div');
-  message.appendChild(document.createTextNode(module.localize('clear-chat.confirm.message', {
-    count: toDelete.length.toString(),
-    total: game.messages.size.toString(),
-    trigger: trigger.toString(),
-    target: target.toString(),
-  })));
+  message.appendChild(
+    document.createTextNode(
+      module.localize('clear-chat.confirm.message', {
+        count: toDelete.length.toString(),
+        total: game.messages.size.toString(),
+        trigger: trigger.toString(),
+        target: target.toString(),
+      }),
+    ),
+  );
   message.classList.add(confirmMessage);
 
   void Dialog.confirm({

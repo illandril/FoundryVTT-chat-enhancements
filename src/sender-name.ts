@@ -3,13 +3,19 @@ import module from './module';
 import { panToSpeaker } from './panTo';
 import { is5e3OrNewer } from './systems/dnd5e';
 
-const senderNameSetting = module.settings.register('sender-name', Boolean, true, { hasHint: true, requiresReload: true });
-const speakerFocusSetting = module.settings.register('speaker-focus', Boolean, true, { hasHint: true, requiresReload: true });
+const senderNameSetting = module.settings.register('sender-name', Boolean, true, {
+  hasHint: true,
+  requiresReload: true,
+});
+const speakerFocusSetting = module.settings.register('speaker-focus', Boolean, true, {
+  hasHint: true,
+  requiresReload: true,
+});
 
 const cssPlayerName = module.cssPrefix.child('player-name');
 
 const createPlayerNameElem = (message: ChatMessage) => {
-  const playerName = message.user.name;
+  const playerName = message.author.name;
 
   const playerNameElem = document.createElement('span');
 
@@ -47,7 +53,9 @@ Hooks.on('renderChatMessage', (message, element) => {
   const messageSenderElem = element.get(0)?.querySelector('.message-sender');
 
   if (!messageSenderElem) {
-    module.logger.error(`Could not update Chat Message sender for ${message.id} - .message-sender was not where it was expected`);
+    module.logger.error(
+      `Could not update Chat Message sender for ${message.id} - .message-sender was not where it was expected`,
+    );
     return;
   }
 

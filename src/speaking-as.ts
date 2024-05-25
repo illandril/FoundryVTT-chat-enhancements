@@ -2,9 +2,18 @@ import { hoverIn, hoverOut } from './hover';
 import module from './module';
 import { panToSpeaker, panToToken } from './panTo';
 
-const speakingAsSetting = module.settings.register('speaking-as', Boolean, true, { hasHint: true, requiresReload: true });
-const selectorSetting = module.settings.register('speaking-as-selector', Boolean, true, { hasHint: true, requiresReload: true });
-const focusSetting = module.settings.register('speaking-as-focus', Boolean, true, { hasHint: true, requiresReload: true });
+const speakingAsSetting = module.settings.register('speaking-as', Boolean, true, {
+  hasHint: true,
+  requiresReload: true,
+});
+const selectorSetting = module.settings.register('speaking-as-selector', Boolean, true, {
+  hasHint: true,
+  requiresReload: true,
+});
+const focusSetting = module.settings.register('speaking-as-focus', Boolean, true, {
+  hasHint: true,
+  requiresReload: true,
+});
 
 const cssCurrentSpeaker = module.cssPrefix.child('current-speaker');
 const cssTokenThumbnail = module.cssPrefix.child('token-thumbnail');
@@ -17,11 +26,16 @@ const updateSpeaker = () => {
   currentSpeakerDisplay.innerText = module.localize('currentSpeaker', { name });
 };
 
-const speakerImage = (imageSource: string) => `<img src="${encodeURI(imageSource || foundry.CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
+const speakerImage = (imageSource: string) =>
+  `<img src="${encodeURI(imageSource || foundry.CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
 
 const sortByName = (option1: { name: string }, option2: { name: string }) => option1.name.localeCompare(option2.name);
 const releaseAllTokens = () => {
-  game.canvas.tokens?.controlled.forEach((token) => token.release());
+  if (game.canvas.tokens?.controlled) {
+    for (const token of game.canvas.tokens.controlled) {
+      token.release();
+    }
+  }
 };
 
 const getSpeakerOptions = () => {

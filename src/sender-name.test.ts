@@ -74,10 +74,10 @@ it('adds the user name after the speaker alias', () => {
       actor: chance.hash(),
       alias: speakerAlias,
     },
-    user: {
+    author: {
       name: userName,
     },
-  } as Partial<ChatMessage> as unknown as ChatMessage;
+  } as Partial<ChatMessage> as ChatMessage;
 
   const element = mockChatMessageElement(messageId, speakerAlias);
   mockChatLog(element);
@@ -102,8 +102,8 @@ it('adds the user name after the speaker alias', () => {
   expect(userNameElem).toHaveClass('illandril-chat-enhancements--player-name');
 });
 
-it.todo('doesn\'t modify private whispers');
-it.todo('doesn\'t modify other chat messages');
+it.todo("doesn't modify private whispers");
+it.todo("doesn't modify other chat messages");
 it.todo('hover in/out');
 it.todo('double click');
 it.todo('sender-name setting on/off');

@@ -4,10 +4,10 @@ type MaybeToken = Token | undefined;
 
 const getTokenFromSpeaker = (speaker: SpeakerType): MaybeToken => {
   if (!game.canvas.ready) {
-    module.logger.info(`getTokenFromSpeaker bailed - canvas is not ready yet`);
+    module.logger.info('getTokenFromSpeaker bailed - canvas is not ready yet');
     return undefined;
   }
-  let token;
+  let token: MaybeToken;
   if (speaker.token) {
     token = getTokenFromID(speaker.token);
   }
@@ -17,7 +17,8 @@ const getTokenFromSpeaker = (speaker: SpeakerType): MaybeToken => {
   return token;
 };
 
-const getTokenByActorID = (actorID: string): MaybeToken => game.canvas.tokens?.placeables.find((token) => token.document?.actorLink && token.actor?.id === actorID);
+const getTokenByActorID = (actorID: string): MaybeToken =>
+  game.canvas.tokens?.placeables.find((token) => token.document?.actorLink && token.actor?.id === actorID);
 
 const getTokenFromID = (tokenID: string): MaybeToken => game.canvas.tokens?.get(tokenID);
 

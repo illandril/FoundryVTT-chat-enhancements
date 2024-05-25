@@ -1,26 +1,31 @@
-import { Enabled, Confirm, Target, Trigger } from './clear-chat';
+import { Confirm, Enabled, Target, Trigger } from './clear-chat';
 import module from './module';
 
+// biome-ignore lint/style/useNamingConvention: Not our name
 (window as { ChatMessage: { deleteDocuments: typeof ChatMessage.deleteDocuments } }).ChatMessage = {
   deleteDocuments: jest.fn(),
 };
 
 const mockMessages: {
-  size: number
-  reduce: typeof game.messages.reduce
+  size: number;
+  reduce: typeof game.messages.reduce;
 } = {
   size: 0,
   reduce: (reducer, initial) => {
     let value = initial;
     for (let i = 0; i < mockMessages.size; i++) {
-      value = reducer(value, {
-        id: `mock-message-id-${i}`,
-      } as ChatMessage, i, game.messages);
+      value = reducer(
+        value,
+        {
+          id: `mock-message-id-${i}`,
+        } as ChatMessage,
+        i,
+        game.messages,
+      );
     }
     return value;
   },
 };
-
 
 (game as { messages: Partial<typeof game.messages> }).messages = mockMessages;
 
@@ -28,6 +33,7 @@ const infoSpy = jest.spyOn(ui.notifications, 'info');
 const warnSpy = jest.spyOn(module.logger, 'warn');
 const errorSpy = jest.spyOn(module.logger, 'error');
 const confirmSpy = jest.fn<ReturnType<typeof Dialog.confirm<void>>, Parameters<typeof Dialog.confirm<void>>>();
+// biome-ignore lint/style/useNamingConvention: Not our name
 (window as unknown as { Dialog: { confirm: typeof Dialog.confirm<void> } }).Dialog = {
   confirm: confirmSpy,
 };
@@ -94,13 +100,18 @@ describe('Enabled', () => {
         await Promise.resolve();
 
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-        const expectedDeleted = Array.from({
-          length: 501,
-        }, (_x, i) => `mock-message-id-${i}`);
+        const expectedDeleted = Array.from(
+          {
+            length: 501,
+          },
+          (_x, i) => `mock-message-id-${i}`,
+        );
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
         expect(infoSpy).toHaveBeenCalledTimes(1);
-        expect(infoSpy).toHaveBeenCalledWith('mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"501"}]');
+        expect(infoSpy).toHaveBeenCalledWith(
+          'mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"501"}]',
+        );
 
         expect(warnSpy).toHaveBeenCalledTimes(3);
         expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -109,6 +120,7 @@ describe('Enabled', () => {
       });
 
       describe.each([100, 500, 1000])('trigger=%i, target=50', (trigger) => {
+        // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... trigger is different each loop
         beforeAll(() => {
           Trigger.set(trigger);
           Target.set(50);
@@ -150,13 +162,18 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: trigger - 49,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: trigger - 49,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${trigger - 49}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${trigger - 49}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -173,13 +190,18 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 9950,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 9950,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith('mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"9950"}]');
+          expect(infoSpy).toHaveBeenCalledWith(
+            'mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"9950"}]',
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -189,6 +211,7 @@ describe('Enabled', () => {
       });
 
       describe.each([100, 500, 1000])('trigger=1000, target=%i', (target) => {
+        // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... target is different each loop
         beforeAll(() => {
           Trigger.set(1000);
           Target.set(target);
@@ -212,13 +235,18 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 1001 - target,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 1001 - target,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${1001 - target}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${1001 - target}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -235,13 +263,18 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 10000 - target,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 10000 - target,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${10000 - target}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${10000 - target}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -261,13 +294,18 @@ describe('Enabled', () => {
         await Promise.resolve();
 
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-        const expectedDeleted = Array.from({
-          length: 1000,
-        }, (_x, i) => `mock-message-id-${i}`);
+        const expectedDeleted = Array.from(
+          {
+            length: 1000,
+          },
+          (_x, i) => `mock-message-id-${i}`,
+        );
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
         expect(infoSpy).toHaveBeenCalledTimes(1);
-        expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"1000"}]`);
+        expect(infoSpy).toHaveBeenCalledWith(
+          `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"1000"}]`,
+        );
 
         expect(warnSpy).toHaveBeenCalledTimes(3);
         expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
@@ -284,7 +322,11 @@ describe('Enabled', () => {
 
         Hooks.callAll('ready');
 
-        expect(errorSpy).toHaveBeenCalledWith('Chat Log not cleared - Clear Trigger cannot be less than the Clear Target', 500, 1000);
+        expect(errorSpy).toHaveBeenCalledWith(
+          'Chat Log not cleared - Clear Trigger cannot be less than the Clear Target',
+          500,
+          1000,
+        );
         expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
       });
 
@@ -325,7 +367,8 @@ describe('Enabled', () => {
           expect(confirmSpy).toHaveBeenCalledTimes(1);
           expect(confirmSpy).toHaveBeenCalledWith({
             title: 'mock-localize[illandril-chat-enhancements.clear-chat.confirm.title]',
-            content: '<div class="illandril-chat-enhancements--clear-chat--confirm-message">mock-format[illandril-chat-enhancements.clear-chat.confirm.message][{"count":"4600","total":"5000","trigger":"750","target":"400"}]</div>',
+            content:
+              '<div class="illandril-chat-enhancements--clear-chat--confirm-message">mock-format[illandril-chat-enhancements.clear-chat.confirm.message][{"count":"4600","total":"5000","trigger":"750","target":"400"}]</div>',
             yes: expect.any(Function) as Parameters<typeof Dialog.confirm>[0]['yes'],
             no: expect.any(Function) as Parameters<typeof Dialog.confirm>[0]['no'],
             defaultYes: false,
@@ -351,7 +394,8 @@ describe('Enabled', () => {
           expect(confirmSpy).toHaveBeenCalledTimes(1);
           expect(confirmSpy).toHaveBeenCalledWith({
             title: 'mock-localize[illandril-chat-enhancements.clear-chat.confirm.title]',
-            content: '<div class="illandril-chat-enhancements--clear-chat--confirm-message">mock-format[illandril-chat-enhancements.clear-chat.confirm.message][{"count":"501","total":"1001","trigger":"1000","target":"500"}]</div>',
+            content:
+              '<div class="illandril-chat-enhancements--clear-chat--confirm-message">mock-format[illandril-chat-enhancements.clear-chat.confirm.message][{"count":"501","total":"1001","trigger":"1000","target":"500"}]</div>',
             yes: expect.any(Function) as Parameters<typeof Dialog.confirm>[0]['yes'],
             no: expect.any(Function) as Parameters<typeof Dialog.confirm>[0]['no'],
             defaultYes: false,
@@ -374,15 +418,20 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 501,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 501,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith('mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"501"}]');
+          expect(infoSpy).toHaveBeenCalledWith(
+            'mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"501"}]',
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - cleanup confirmed');
@@ -415,6 +464,7 @@ describe('Enabled', () => {
       });
 
       describe.each([100, 500, 1000])('trigger=%i, target=50', (trigger) => {
+        // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... trigger is different each loop
         beforeAll(() => {
           Trigger.set(trigger);
           Target.set(50);
@@ -464,15 +514,20 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: trigger - 49,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: trigger - 49,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${trigger - 49}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${trigger - 49}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - cleanup confirmed');
@@ -492,15 +547,20 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 9950,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 9950,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith('mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"9950"}]');
+          expect(infoSpy).toHaveBeenCalledWith(
+            'mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"9950"}]',
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - cleanup confirmed');
@@ -510,6 +570,7 @@ describe('Enabled', () => {
       });
 
       describe.each([100, 500, 1000])('trigger=1000, target=%i', (target) => {
+        // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... target is different each loop
         beforeAll(() => {
           Trigger.set(1000);
           Target.set(target);
@@ -537,15 +598,20 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 1001 - target,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 1001 - target,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${1001 - target}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${1001 - target}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - cleanup confirmed');
@@ -565,15 +631,20 @@ describe('Enabled', () => {
           await Promise.resolve();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
-          const expectedDeleted = Array.from({
-            length: 10000 - target,
-          }, (_x, i) => `mock-message-id-${i}`);
+          const expectedDeleted = Array.from(
+            {
+              length: 10000 - target,
+            },
+            (_x, i) => `mock-message-id-${i}`,
+          );
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
 
           expect(infoSpy).toHaveBeenCalledTimes(1);
-          expect(infoSpy).toHaveBeenCalledWith(`mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${10000 - target}"}]`);
+          expect(infoSpy).toHaveBeenCalledWith(
+            `mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"${10000 - target}"}]`,
+          );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
           expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - cleanup confirmed');
