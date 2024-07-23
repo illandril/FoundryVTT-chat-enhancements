@@ -56,7 +56,7 @@
     "jest-fail-on-console": "^3.3.0",
     "npm-run-all2": "^6.2.0",
     "rimraf": "^5.0.7",
-    "rollup": "^4.18.0",
+    "rollup": "^4.19.0",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5"
   }
