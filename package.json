@@ -43,7 +43,7 @@
     "@illandril/foundryvtt-types": "^7.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@testing-library/dom": "^10.1.0",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@types/chance": "^1.1.6",
     "@types/jest": "^29.5.12",
