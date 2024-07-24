@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/illandril/FoundryVTT-chat-enhancements#readme",
   "dependencies": {
-    "@illandril/foundryvtt-utils": "^10.0.5"
+    "@illandril/foundryvtt-utils": "^10.1.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.24.8",
