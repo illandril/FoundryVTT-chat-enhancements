@@ -3,11 +3,17 @@ import module from './module';
 const cssPrefix = module.cssPrefix.childPrefix('clear-chat');
 const confirmMessage = cssPrefix.child('confirm-message');
 
-export const Enabled = module.settings.register('clear-chat.enabled', Boolean, false, {
+// Note: Setting name is "enabled", but only applies to the clear on load behavior.
+// The name was selected before the "CheckEveryMessage" setting was added.
+export const CheckOnLoad = module.settings.register('clear-chat.enabled', Boolean, false, {
   hasHint: true,
 });
 
 export const Confirm = module.settings.register('clear-chat.confirm', Boolean, true, {
+  hasHint: true,
+});
+
+export const CheckEveryMessage = module.settings.register('clear-chat.check-every-message', Boolean, false, {
   hasHint: true,
 });
 
@@ -23,10 +29,23 @@ Hooks.on('ready', () => {
   if (!game.user?.isGM) {
     return;
   }
-  if (!Enabled.get()) {
+  if (!CheckOnLoad.get()) {
     module.logger.debug('clear-chat disabled');
     return;
   }
+  cleanupIfNecessary(false);
+});
+
+Hooks.on('createChatMessage', () => {
+  if (!game.user?.isGM) {
+    return;
+  }
+  if (CheckEveryMessage.get()) {
+    cleanupIfNecessary(true);
+  }
+});
+
+const cleanupIfNecessary = foundry.utils.debounce((skipConfirm: boolean) => {
   const target = Target.get();
   if (target < 0) {
     module.logger.error('Chat Log not cleared - Clear Target cannot be negative', target);
@@ -38,10 +57,10 @@ Hooks.on('ready', () => {
     return;
   }
   module.logger.debug('clear-chat enabled', trigger, target);
-  sweepChatLog(trigger, target);
-});
+  sweepChatLog(trigger, target, skipConfirm);
+}, 100);
 
-const sweepChatLog = (trigger: number, target: number) => {
+const sweepChatLog = (trigger: number, target: number, skipConfirm: boolean) => {
   if (game.messages.size <= trigger) {
     module.logger.debug(
       'Chat Log not cleared - fewer (or equal) messages than the trigger',
@@ -65,8 +84,8 @@ const sweepChatLog = (trigger: number, target: number) => {
     );
   };
 
-  if (!Confirm.get()) {
-    module.logger.warn('Cleaning up Chat - confirmation disabled');
+  if (skipConfirm || !Confirm.get()) {
+    module.logger.warn('Cleaning up Chat - confirmation disabled or skipped');
     void cleanup();
     return;
   }

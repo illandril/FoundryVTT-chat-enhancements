@@ -11,9 +11,13 @@
           "label": "Clear Chat on Load",
           "hint": "If enabled, the chat log will be cleaned up whenever a GM loads Foundry and there are more than Clear Trigger chat messages in the chat log. WARNING: Chat messages that are deleted cannot be recovered - they will be lost forever."
         },
+        "check-every-message": {
+          "label": "Clear Chat on Message",
+          "hint": "(Not Recommended) If enabled, the chat log will be cleaned up whenever a chat message is created if a GM is connected and there are more than Clear Trigger chat messages in the chat log. WARNING: Chat messages that are deleted cannot be recovered - they will be lost forever. The Confirm Before Deleting setting will be ignored when chat is cleared this way. Someone spamming chat messages could cause earlier chat messages to be lost forever before you have a chance to react."
+        },
         "confirm": {
           "label": "Confirm Before Deleting",
-          "hint": "(Recommended) If enabled, the GM will be prompted to confirm before the chat messages are deleted."
+          "hint": "(Recommended; Clear Chat on Load only) If enabled, the GM will be prompted to confirm before the chat messages are deleted."
         },
         "trigger": {
           "label": "Clear Trigger",

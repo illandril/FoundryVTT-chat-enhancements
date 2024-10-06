@@ -1,4 +1,4 @@
-import { Confirm, Enabled, Target, Trigger } from './clear-chat';
+import { CheckEveryMessage, CheckOnLoad, Confirm, Target, Trigger } from './clear-chat';
 import module from './module';
 
 // biome-ignore lint/style/useNamingConvention: Not our name
@@ -37,8 +37,14 @@ const confirmSpy = jest.fn<ReturnType<typeof Dialog.confirm<void>>, Parameters<t
 (window as unknown as { Dialog: { confirm: typeof Dialog.confirm<void> } }).Dialog = {
   confirm: confirmSpy,
 };
+jest.spyOn(foundry.utils, 'debounce').mockImplementation((fn) => fn);
+
+beforeAll(() => {
+  Hooks.callAll('init');
+});
 
 beforeEach(() => {
+  jest.useFakeTimers();
   infoSpy.mockImplementation(() => {
     throw new Error('Unexpected call to ui.notifications.info');
   });
@@ -53,13 +59,13 @@ beforeEach(() => {
   });
 });
 
-beforeAll(() => {
-  Hooks.callAll('init');
+afterEach(() => {
+  jest.useRealTimers();
 });
 
 describe('Disabled', () => {
-  beforeAll(() => {
-    Enabled.set(false);
+  beforeEach(() => {
+    CheckOnLoad.set(false);
     Confirm.set(false);
     Trigger.set(1000);
     Target.set(500);
@@ -67,25 +73,27 @@ describe('Disabled', () => {
     mockMessages.size = 10000;
   });
 
-  it('does not try to delete any messages even', () => {
+  it('does not try to delete any messages even if past trigger threshold', async () => {
     Hooks.callAll('ready');
+    await jest.runAllTimersAsync();
 
     expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
   });
 });
 
 describe('Enabled', () => {
-  beforeAll(() => {
-    Enabled.set(true);
+  beforeEach(() => {
+    CheckEveryMessage.set(false);
+    CheckOnLoad.set(true);
   });
 
   describe('GM', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       (game.user as { isGM: boolean }).isGM = true;
     });
 
     describe('confirm = false', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         Confirm.set(false);
       });
 
@@ -97,7 +105,7 @@ describe('Enabled', () => {
         warnSpy.mockImplementation(() => undefined);
 
         Hooks.callAll('ready');
-        await Promise.resolve();
+        await jest.runAllTimersAsync();
 
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
         const expectedDeleted = Array.from(
@@ -114,14 +122,14 @@ describe('Enabled', () => {
         );
 
         expect(warnSpy).toHaveBeenCalledTimes(3);
-        expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+        expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
         expect(warnSpy).toHaveBeenCalledWith('Deleting', 501, 'messages');
         expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 501, 'messages');
       });
 
       describe.each([100, 500, 1000])('trigger=%i, target=50', (trigger) => {
         // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... trigger is different each loop
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(trigger);
           Target.set(50);
         });
@@ -130,7 +138,7 @@ describe('Enabled', () => {
           mockMessages.size = 0;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
         });
@@ -139,7 +147,7 @@ describe('Enabled', () => {
           mockMessages.size = trigger - 1;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
         });
@@ -148,7 +156,7 @@ describe('Enabled', () => {
           mockMessages.size = trigger;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
         });
@@ -159,7 +167,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -176,7 +184,7 @@ describe('Enabled', () => {
           );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
-          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
           expect(warnSpy).toHaveBeenCalledWith('Deleting', trigger - 49, 'messages');
           expect(warnSpy).toHaveBeenLastCalledWith('Deleted', trigger - 49, 'messages');
         });
@@ -187,7 +195,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -204,7 +212,7 @@ describe('Enabled', () => {
           );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
-          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
           expect(warnSpy).toHaveBeenCalledWith('Deleting', 9950, 'messages');
           expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 9950, 'messages');
         });
@@ -212,7 +220,7 @@ describe('Enabled', () => {
 
       describe.each([100, 500, 1000])('trigger=1000, target=%i', (target) => {
         // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... target is different each loop
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(1000);
           Target.set(target);
         });
@@ -221,7 +229,7 @@ describe('Enabled', () => {
           mockMessages.size = 1000;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
         });
@@ -232,7 +240,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -249,7 +257,7 @@ describe('Enabled', () => {
           );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
-          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
           expect(warnSpy).toHaveBeenCalledWith('Deleting', 1001 - target, 'messages');
           expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 1001 - target, 'messages');
         });
@@ -260,7 +268,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -277,7 +285,7 @@ describe('Enabled', () => {
           );
 
           expect(warnSpy).toHaveBeenCalledTimes(3);
-          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+          expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
           expect(warnSpy).toHaveBeenCalledWith('Deleting', 10000 - target, 'messages');
           expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 10000 - target, 'messages');
         });
@@ -291,7 +299,7 @@ describe('Enabled', () => {
         warnSpy.mockImplementation(() => undefined);
 
         Hooks.callAll('ready');
-        await Promise.resolve();
+        await jest.runAllTimersAsync();
 
         expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
         const expectedDeleted = Array.from(
@@ -308,12 +316,12 @@ describe('Enabled', () => {
         );
 
         expect(warnSpy).toHaveBeenCalledTimes(3);
-        expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled');
+        expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
         expect(warnSpy).toHaveBeenCalledWith('Deleting', 1000, 'messages');
         expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 1000, 'messages');
       });
 
-      it('does not try to delete any messages if trigger < target', () => {
+      it('does not try to delete any messages if trigger < target', async () => {
         Trigger.set(500);
         Target.set(1000);
         mockMessages.size = 10000;
@@ -321,6 +329,7 @@ describe('Enabled', () => {
         errorSpy.mockImplementation(() => undefined);
 
         Hooks.callAll('ready');
+        await jest.runAllTimersAsync();
 
         expect(errorSpy).toHaveBeenCalledWith(
           'Chat Log not cleared - Clear Trigger cannot be less than the Clear Target',
@@ -330,7 +339,7 @@ describe('Enabled', () => {
         expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
       });
 
-      it('does not try to delete any messages if target < 0', () => {
+      it('does not try to delete any messages if target < 0', async () => {
         Trigger.set(-1);
         Target.set(-2);
         mockMessages.size = 10000;
@@ -338,6 +347,7 @@ describe('Enabled', () => {
         errorSpy.mockImplementation(() => undefined);
 
         Hooks.callAll('ready');
+        await jest.runAllTimersAsync();
 
         expect(errorSpy).toHaveBeenCalledWith('Chat Log not cleared - Clear Target cannot be negative', -2);
         expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
@@ -345,12 +355,12 @@ describe('Enabled', () => {
     });
 
     describe('confirm = true', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         Confirm.set(true);
       });
 
       describe('trigger=750, target=400, messages=5000', () => {
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(750);
           Target.set(400);
           mockMessages.size = 5000;
@@ -362,7 +372,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
           expect(confirmSpy).toHaveBeenCalledWith({
@@ -377,7 +387,7 @@ describe('Enabled', () => {
       });
 
       describe('trigger=1000, target=500, messages=1001', () => {
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(1000);
           Target.set(500);
           mockMessages.size = 1001;
@@ -389,7 +399,7 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).toHaveBeenCalledTimes(1);
           expect(confirmSpy).toHaveBeenCalledWith({
@@ -408,14 +418,14 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
           expect(infoSpy).not.toHaveBeenCalled();
           expect(warnSpy).not.toHaveBeenCalled();
 
           confirmSpy.mock.lastCall![0].yes(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -445,12 +455,12 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(warnSpy).not.toHaveBeenCalled();
 
           confirmSpy.mock.lastCall![0].no(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
 
@@ -465,7 +475,7 @@ describe('Enabled', () => {
 
       describe.each([100, 500, 1000])('trigger=%i, target=50', (trigger) => {
         // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... trigger is different each loop
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(trigger);
           Target.set(50);
         });
@@ -474,7 +484,7 @@ describe('Enabled', () => {
           mockMessages.size = 0;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).not.toHaveBeenCalled();
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
@@ -485,7 +495,7 @@ describe('Enabled', () => {
           confirmSpy.mockImplementation(() => Promise.resolve(null));
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).not.toHaveBeenCalled();
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
@@ -496,7 +506,7 @@ describe('Enabled', () => {
           confirmSpy.mockImplementation(() => Promise.resolve(null));
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).not.toHaveBeenCalled();
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
@@ -509,9 +519,9 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
           confirmSpy.mock.lastCall![0].yes(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -542,9 +552,9 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
           confirmSpy.mock.lastCall![0].yes(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -571,7 +581,7 @@ describe('Enabled', () => {
 
       describe.each([100, 500, 1000])('trigger=1000, target=%i', (target) => {
         // biome-ignore lint/suspicious/noDuplicateTestHooks: Not a duplicate... target is different each loop
-        beforeAll(() => {
+        beforeEach(() => {
           Trigger.set(1000);
           Target.set(target);
         });
@@ -580,7 +590,7 @@ describe('Enabled', () => {
           mockMessages.size = 1000;
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(confirmSpy).not.toHaveBeenCalled();
           expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
@@ -593,9 +603,9 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
           confirmSpy.mock.lastCall![0].yes(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -626,9 +636,9 @@ describe('Enabled', () => {
           warnSpy.mockImplementation(() => undefined);
 
           Hooks.callAll('ready');
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
           confirmSpy.mock.lastCall![0].yes(document.createElement('div'));
-          await Promise.resolve();
+          await jest.runAllTimersAsync();
 
           expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
           const expectedDeleted = Array.from(
@@ -653,10 +663,88 @@ describe('Enabled', () => {
         });
       });
     });
+
+    describe('check-every-message = false', () => {
+      beforeEach(() => {
+        CheckEveryMessage.set(false);
+        Confirm.set(false);
+        Trigger.set(1000);
+        Target.set(500);
+        mockMessages.size = 1001;
+      });
+
+      it('does not delete messages on createChatMessage', async () => {
+        Trigger.set(1000);
+        Target.set(500);
+        mockMessages.size = 1001;
+        infoSpy.mockImplementation(() => 1234);
+        warnSpy.mockImplementation(() => undefined);
+
+        Hooks.callAll('createChatMessage', {} as foundry.abstract.Document, {}, {});
+        await jest.runAllTimersAsync();
+
+        expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
+        expect(infoSpy).not.toHaveBeenCalled();
+        expect(warnSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('check-every-message = true', () => {
+      beforeEach(() => {
+        CheckEveryMessage.set(true);
+        Confirm.set(false);
+      });
+
+      it('deletes messages on createChatMessage if past trigger', async () => {
+        Trigger.set(1000);
+        Target.set(500);
+        mockMessages.size = 1001;
+        infoSpy.mockImplementation(() => 1234);
+        warnSpy.mockImplementation(() => undefined);
+
+        expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
+
+        Hooks.callAll('createChatMessage', {} as foundry.abstract.Document, {}, {});
+        await jest.runAllTimersAsync();
+
+        expect(ChatMessage.deleteDocuments).toHaveBeenCalledTimes(1);
+        const expectedDeleted = Array.from(
+          {
+            length: 501,
+          },
+          (_x, i) => `mock-message-id-${i}`,
+        );
+        expect(ChatMessage.deleteDocuments).toHaveBeenCalledWith(expectedDeleted);
+
+        expect(infoSpy).toHaveBeenCalledTimes(1);
+        expect(infoSpy).toHaveBeenCalledWith(
+          'mock-format[illandril-chat-enhancements.clear-chat.notification.deleted][{"count":"501"}]',
+        );
+
+        expect(warnSpy).toHaveBeenCalledTimes(3);
+        expect(warnSpy).toHaveBeenCalledWith('Cleaning up Chat - confirmation disabled or skipped');
+        expect(warnSpy).toHaveBeenCalledWith('Deleting', 501, 'messages');
+        expect(warnSpy).toHaveBeenLastCalledWith('Deleted', 501, 'messages');
+      });
+
+      it('does not deletes messages on createChatMessage if not past trigger', async () => {
+        Trigger.set(1000);
+        Target.set(500);
+        mockMessages.size = 1000;
+        infoSpy.mockImplementation(() => 1234);
+        warnSpy.mockImplementation(() => undefined);
+
+        Hooks.callAll('createChatMessage', {} as foundry.abstract.Document, {}, {});
+        await jest.runAllTimersAsync();
+
+        expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
+      });
+    });
   });
 
   describe('Non-GM', () => {
-    beforeAll(() => {
+    beforeEach(() => {
+      CheckEveryMessage.set(true);
       Confirm.set(false);
       Trigger.set(1000);
       Target.set(500);
@@ -664,8 +752,9 @@ describe('Enabled', () => {
       mockMessages.size = 10000;
     });
 
-    it('does not try to delete any messages', () => {
+    it('does not try to delete any messages', async () => {
       Hooks.callAll('ready');
+      await jest.runAllTimersAsync();
 
       expect(ChatMessage.deleteDocuments).not.toHaveBeenCalled();
     });
