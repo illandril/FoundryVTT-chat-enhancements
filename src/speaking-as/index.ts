@@ -1,6 +1,7 @@
-import { hoverIn, hoverOut } from './hover';
-import module from './module';
-import { panToSpeaker, panToToken } from './panTo';
+import { hoverIn, hoverOut } from '../hover';
+import module from '../module';
+import { panToSpeaker } from '../panTo';
+import getSpeakerOptions from './getSpeakerOptions';
 
 const speakingAsSetting = module.settings.register('speaking-as', Boolean, true, {
   hasHint: true,
@@ -16,7 +17,6 @@ const focusSetting = module.settings.register('speaking-as-focus', Boolean, true
 });
 
 const cssCurrentSpeaker = module.cssPrefix.child('current-speaker');
-const cssTokenThumbnail = module.cssPrefix.child('token-thumbnail');
 
 const currentSpeakerDisplay = document.createElement('div');
 currentSpeakerDisplay.classList.add(cssCurrentSpeaker);
@@ -24,45 +24,6 @@ currentSpeakerDisplay.classList.add(cssCurrentSpeaker);
 const updateSpeaker = () => {
   const name = ChatMessage.getSpeaker().alias || '???';
   currentSpeakerDisplay.innerText = module.localize('currentSpeaker', { name });
-};
-
-const speakerImage = (imageSource: string) =>
-  `<img src="${encodeURI(imageSource || foundry.CONST.DEFAULT_TOKEN)}" class="${cssTokenThumbnail}">`;
-
-const sortByName = (option1: { name: string }, option2: { name: string }) => option1.name.localeCompare(option2.name);
-const releaseAllTokens = () => {
-  if (game.canvas.tokens?.controlled) {
-    for (const token of game.canvas.tokens.controlled) {
-      token.release();
-    }
-  }
-};
-
-const getSpeakerOptions = () => {
-  const speakerOptions: ContextMenuEntry[] = [];
-
-  const tokens = game.canvas.tokens?.ownedTokens || [];
-  for (const token of tokens) {
-    speakerOptions.push({
-      name: token.name || 'Unknown',
-      icon: speakerImage(token.document.texture.src),
-      callback: () => {
-        token.control();
-        panToToken(token);
-      },
-    });
-  }
-  speakerOptions.sort(sortByName);
-
-  if (game.user && !game.user.character) {
-    speakerOptions.unshift({
-      name: game.user.name,
-      icon: speakerImage(game.user.avatar),
-      callback: releaseAllTokens,
-    });
-  }
-
-  return speakerOptions;
 };
 
 Hooks.once('renderChatLog', (_application, element) => {
